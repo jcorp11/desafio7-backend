@@ -8,6 +8,7 @@ describe("Operaciones CRUD de cafes", () => {
     expect(response.statusCode).toBe(200);
     expect(Array.isArray(response.body)).toBe(true);
     expect(response.body.length).toBeGreaterThan(0);
+    expect(response.body[0] instanceof Object).toBe(true);
     expect(response.body[0]).toHaveProperty("id");
   });
   it("DELETE /cafes/:id status 404 when id is not found", async () => {
@@ -16,7 +17,7 @@ describe("Operaciones CRUD de cafes", () => {
     const response = await request(server)
       .delete(url)
       .set("Authorization", `Bearer ${token}`);
-    console.log(response.statusCode);
+    // console.log(response.statusCode);
     expect(response.statusCode).toBe(404);
   });
   it("POST /cafes status 201, adds a coffee", async () => {
@@ -42,9 +43,7 @@ describe("Operaciones CRUD de cafes", () => {
     const response = await request(server)
       .put(`/cafes/${cafeId}`)
       .send(newCafeData);
-
-    // Check if the response status code is 400
-    console.log(response.body);
+    // console.log(response.body);
     expect(response.statusCode).toBe(400);
   });
 });
